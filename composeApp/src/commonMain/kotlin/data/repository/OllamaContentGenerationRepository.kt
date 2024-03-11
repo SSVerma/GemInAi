@@ -1,6 +1,6 @@
 package data.repository
 
-import data.remote.ContentGenerator
+import data.remote.OllamaContentGenerator
 import data.remote.service.OllamaApiService
 import domain.FailureCause
 import domain.Result
@@ -12,13 +12,15 @@ import kotlinx.coroutines.flow.flow
 
 class OllamaContentGenerationRepository(
     private val apiService: OllamaApiService,
-    private val contentGenerator: ContentGenerator<OllamaApiService>
+    private val contentGenerator: OllamaContentGenerator
 ) : ContentGenerationRepository {
     override fun generateContent(args: LlmGenerationArgs): Flow<Result<LlmMessage, FailureCause>> {
         return if (args.stream) {
             contentGenerator.generateStream(args, apiService)
         } else {
-            flow { contentGenerator.generate(args, apiService) }
+            flow {
+                emit(contentGenerator.generate(args, apiService))
+            }
         }
     }
 }

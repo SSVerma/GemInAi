@@ -5,8 +5,8 @@ import data.remote.ApiResult
 import data.remote.request.OllamaChatBody
 import data.remote.request.OllamaPromptBody
 import data.remote.response.OllamaChatResponse
-import data.remote.response.OllamaPromptResponse
 import data.remote.response.OllamaErrorBody
+import data.remote.response.OllamaPromptResponse
 
 interface OllamaApiService : ApiService {
     suspend fun generatePromptResponse(llmPromptBody: OllamaPromptBody): ApiResult<OllamaPromptResponse, OllamaErrorBody>

@@ -29,5 +29,8 @@ fun provideHttpClient(json: Json): HttpClient {
 }
 
 fun provideJson(): Json {
-    return Json { ignoreUnknownKeys = true }
+    return Json {
+        ignoreUnknownKeys = true
+        explicitNulls = false
+    }
 }

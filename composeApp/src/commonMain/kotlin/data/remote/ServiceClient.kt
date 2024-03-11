@@ -4,8 +4,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.http.appendPathSegments
 import io.ktor.http.headers
-import io.ktor.http.path
 import io.ktor.util.StringValues
 import io.ktor.util.StringValuesBuilder
 
@@ -19,7 +19,7 @@ class ServiceClient(
         headers: (StringValuesBuilder.() -> Unit)? = null
     ) = httpClient.get(environment.baseUrl) {
         url {
-            path(path)
+            appendPathSegments(path)
             params?.let { providedParams ->
                 parameters.appendAll(StringValues.build { providedParams() })
             }
@@ -32,7 +32,7 @@ class ServiceClient(
         body: Any?,
         headers: (StringValuesBuilder.() -> Unit)? = null
     ) = httpClient.post(environment.baseUrl) {
-        url { path(path) }
+        url { appendPathSegments(path) }
         setBody(body)
         appendAllHeaders(headers)
     }
